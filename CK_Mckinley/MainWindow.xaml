@@ -1,0 +1,22 @@
+﻿<Window x:Class="CK_Mckinley.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CK_Mckinley"
+        mc:Ignorable="d"
+        Title="{Binding Mode=OneTime, Source={StaticResource ApplicationName}, StringFormat='\{0\} - 로그인 '}" Height="450" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="loginMenu.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid Margin="0,200,0,0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="71" Width="220">
+            <Border BorderBrush="#7F000000" BorderThickness="1" Background="#7FFFFFFF"/>
+            
+            <TextBox x:Name="textBox_id" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="아이디" GotFocus="textBox_id_GotFocus"/>
+            <PasswordBox x:Name="passwordBox_password" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Height="23" Width="120" Password="패스워드" GotFocus="passwordBox_password_GotFocus"/>
+            <Button x:Name="button_login" Content="로그인" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="75" Height="51" Click="button_login_Click" FontSize="18"/>
+        </Grid>
+
+    </Grid>
+</Window>
