@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace CK_Mckinley
 {
@@ -28,16 +29,42 @@ namespace CK_Mckinley
         private void textBox_id_GotFocus(object sender, RoutedEventArgs e)
         {
             textBox_id.Text = string.Empty;
+            textBox_id.GotFocus -= textBox_id_GotFocus;
         }
 
         private void passwordBox_password_GotFocus(object sender, RoutedEventArgs e)
         {
             passwordBox_password.Password = string.Empty;
+            passwordBox_password.GotFocus -= passwordBox_password_GotFocus;
         }
 
         private void button_login_Click(object sender, RoutedEventArgs e)
         {
-            ChangeWindow();
+            Login();
+        }
+        void Login()
+        {
+            DatabaseAccount.CurrentAccount = new DatabaseAccount(textBox_id.Text, passwordBox_password.Password);
+            try
+            {
+                DatabaseAccount.CurrentAccount.Login();
+                ChangeWindow();
+            }
+            catch (MySqlException ex)
+            {
+                switch ((MySqlErrorCode)ex.Number)
+                {
+                    case MySqlErrorCode.AccessDenied:
+                        MessageBox.Show("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.", "로그인 오류");
+                        break;
+                    default:
+                        MessageBox.Show(ex.Message, "알수없는 오류");
+                        break;
+                }
+
+                DatabaseAccount.CurrentAccount.Dispose();
+                DatabaseAccount.CurrentAccount = null;
+            }
         }
 
         void ChangeWindow()
@@ -45,6 +72,12 @@ namespace CK_Mckinley
             Application.Current.MainWindow = new DataWindow();
             this.Close();
             Application.Current.MainWindow.Show();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                Login();
         }
     }
 }
