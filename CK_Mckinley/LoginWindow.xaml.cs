@@ -57,8 +57,11 @@ namespace CK_Mckinley
                     case MySqlErrorCode.AccessDenied:
                         MessageBox.Show("로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요.", "로그인 오류");
                         break;
+                    case MySqlErrorCode.UnableToConnectToHost:
+                        MessageBox.Show("서버에 연결하지 못했습니다. 연결 상태를 확인해주세요.", "로그인 오류");
+                        break;
                     default:
-                        MessageBox.Show(ex.Message, "알수없는 오류");
+                        MessageBox.Show(ex.Message, "로그인 오류 : " + (MySqlErrorCode)ex.Number);
                         break;
                 }
 

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:CK_Mckinley"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoginWindow.xaml">
     <Application.Resources>
-        <clr:String x:Key="ApplicationName">CK 매킨리 데이터베이스</clr:String>
+        <clr:String x:Key="ApplicationName">CK 매킨리 데이터베이스 관리 도구 build 1013_2</clr:String>
     </Application.Resources>
 </Application>

@@ -8,13 +8,13 @@
         Title="{StaticResource ApplicationName}" Height="600" Width="800" WindowStartupLocation="CenterScreen" MinWidth="800" MinHeight="600">
     <Grid>
         <Grid Height="50" Margin="10,10,10,0" VerticalAlignment="Top">
-            <TextBox x:Name="textBox_search" Height="22" Margin="135,14,89,14" Text=""/>
+            <TextBox x:Name="textBox_search" Height="22" Margin="135,14,89,14" Text="" KeyDown="textBox_search_KeyDown"/>
             <ComboBox x:Name="comboBox_search" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
-                <ComboBoxItem Content="작업자 이름"/>
-                <ComboBoxItem Content="팀 이름"/>
-                <ComboBoxItem Content="프로젝트 이름"/>
+                <ComboBoxItem Content="ID"/>
+                <ComboBoxItem Content="팀"/>
+                <ComboBoxItem Content="작업자"/>
             </ComboBox>
-            <Button x:Name="button_search" Content="검색" HorizontalAlignment="Right" Margin="0,10,10,10" Width="74" Height="30"/>
+            <Button x:Name="button_search" Content="검색" HorizontalAlignment="Right" Margin="0,10,10,10" Width="74" Height="30" Click="button_search_Click"/>
         </Grid>
         <GroupBox x:Name="groupBox_dataform" Header="데이터" Margin="10,65,10,55">
             <Grid>
@@ -22,15 +22,15 @@
                     <ColumnDefinition Width="330"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="label_idHelper" Content="※ 자동으로 지정됩니다." HorizontalAlignment="Left" Margin="144,12,0,0" VerticalAlignment="Top" Foreground="Red" Height="26" Width="139"/>
+                <Label x:Name="label_idHelper" Content="※ 자동으로 지정됩니다." HorizontalAlignment="Left" Margin="144,12,0,0" VerticalAlignment="Top" Foreground="Red" Height="26"/>
                 <Label x:Name="label_id" Content="ID :" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Height="26" Width="29"/>
-                <TextBox x:Name="textBox_id" Height="23" Margin="39,14,0,0" Text="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" IsEnabled="False" ToolTip=""/>
+                <TextBox x:Name="textBox_id" Height="23" Margin="39,14,0,0" Text="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" ToolTip="" TextChanged="textBox_id_TextChanged" IsEnabled="False"/>
                 <Label x:Name="label_team" Content="팀 :" HorizontalAlignment="Left" Margin="62,42,0,0" VerticalAlignment="Top" Height="26" Width="29"/>
-                <TextBox x:Name="textBox_team" HorizontalAlignment="Left" Height="23" Margin="96,46,0,0" Text="ㅁ" VerticalAlignment="Top" Width="224"/>
+                <TextBox x:Name="textBox_team" HorizontalAlignment="Left" Height="23" Margin="96,46,0,0" VerticalAlignment="Top" Width="224"/>
                 <Label x:Name="label_owner" Content="작업자 :" HorizontalAlignment="Left" Margin="38,73,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
-                <TextBox x:Name="textBox_owner" HorizontalAlignment="Left" Height="23" Margin="96,77,0,0" Text="ㅁ" VerticalAlignment="Top" Width="224"/>
-                <Label x:Name="label_genre" Content="장르 :" HorizontalAlignment="Left" Margin="50,124,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-                <ComboBox x:Name="comboBox_genre" HorizontalAlignment="Left" Margin="96,126,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <TextBox x:Name="textBox_owner" HorizontalAlignment="Left" Height="23" Margin="96,77,0,0" VerticalAlignment="Top" Width="224"/>
+                <Label x:Name="label_genre" Content="장르 :" HorizontalAlignment="Left" Margin="50,149,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <ComboBox x:Name="comboBox_genre" HorizontalAlignment="Left" Margin="96,151,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="RPG"/>
                     <ComboBoxItem Content="FPS"/>
@@ -50,14 +50,14 @@
                     <ComboBoxItem Content="캐주얼"/>
                     <ComboBoxItem Content="보드"/>
                 </ComboBox>
-                <Label x:Name="label_dimension" Content="공간 :" HorizontalAlignment="Left" Margin="50,154,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-                <ComboBox x:Name="comboBox_dimension" HorizontalAlignment="Left" Margin="96,156,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <Label x:Name="label_dimension" Content="공간 :" HorizontalAlignment="Left" Margin="50,179,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <ComboBox x:Name="comboBox_dimension" HorizontalAlignment="Left" Margin="96,181,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="2D"/>
                     <ComboBoxItem Content="3D"/>
                 </ComboBox>
-                <Label x:Name="label_platform" Content="플랫폼 :" HorizontalAlignment="Left" Margin="38,186,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
-                <ComboBox x:Name="comboBox_platform" HorizontalAlignment="Left" Margin="96,188,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <Label x:Name="label_platform" Content="플랫폼 :" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
+                <ComboBox x:Name="comboBox_platform" HorizontalAlignment="Left" Margin="96,213,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="PC"/>
                     <ComboBoxItem Content="모바일"/>
@@ -66,28 +66,29 @@
                     <ComboBoxItem Content="PS"/>
                     <ComboBoxItem Content="Nintendo"/>
                 </ComboBox>
-                <Label x:Name="label_year" Content="년도 :" HorizontalAlignment="Left" Margin="50,216,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-                <ComboBox x:Name="comboBox_year" HorizontalAlignment="Left" Margin="96,218,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
-                    <ComboBoxItem Content="2015"/>
-                    <ComboBoxItem Content="2014"/>
-                    <ComboBoxItem Content="2013"/>
-                    <ComboBoxItem Content="2012"/>
-                    <ComboBoxItem Content="2011"/>
-                    <ComboBoxItem Content="2010"/>
-                    <ComboBoxItem Content="2009"/>
-                    <ComboBoxItem Content="2008"/>
-                    <ComboBoxItem Content="2007"/>
-                    <ComboBoxItem Content="2006"/>
-                    <ComboBoxItem Content="2005"/>
-                    <ComboBoxItem Content="2004"/>
-                    <ComboBoxItem Content="2003"/>
-                    <ComboBoxItem Content="2002"/>
-                    <ComboBoxItem Content="2001"/>
-                    <ComboBoxItem Content="2000"/>
+                <Label x:Name="label_year" Content="년도 :" HorizontalAlignment="Left" Margin="50,241,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <ComboBox x:Name="comboBox_year" HorizontalAlignment="Left" Margin="96,243,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                    <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="1999"/>
+                    <ComboBoxItem Content="2000"/>
+                    <ComboBoxItem Content="2001"/>
+                    <ComboBoxItem Content="2002"/>
+                    <ComboBoxItem Content="2003"/>
+                    <ComboBoxItem Content="2004"/>
+                    <ComboBoxItem Content="2005"/>
+                    <ComboBoxItem Content="2006"/>
+                    <ComboBoxItem Content="2007"/>
+                    <ComboBoxItem Content="2008"/>
+                    <ComboBoxItem Content="2009"/>
+                    <ComboBoxItem Content="2010"/>
+                    <ComboBoxItem Content="2011"/>
+                    <ComboBoxItem Content="2012"/>
+                    <ComboBoxItem Content="2013"/>
+                    <ComboBoxItem Content="2014"/>
+                    <ComboBoxItem Content="2015"/>
                 </ComboBox>
-                <Label x:Name="label_world" Content="세계관 :" HorizontalAlignment="Left" Margin="38,248,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
-                <ComboBox x:Name="comboBox_world" HorizontalAlignment="Left" Margin="96,250,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <Label x:Name="label_world" Content="세계관 :" HorizontalAlignment="Left" Margin="38,273,0,0" VerticalAlignment="Top" Height="26" Width="53"/>
+                <ComboBox x:Name="comboBox_world" HorizontalAlignment="Left" Margin="96,275,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="판타지"/>
                     <ComboBoxItem Content="SF"/>
@@ -96,10 +97,9 @@
                     <ComboBoxItem Content="우주"/>
                     <ComboBoxItem Content="현대"/>
                     <ComboBoxItem Content="동화풍"/>
-                    <ComboBoxItem Content="기타"/>
                 </ComboBox>
-                <Label x:Name="label_engine" Content="엔진 :" HorizontalAlignment="Left" Margin="50,278,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-                <ComboBox x:Name="comboBox_engine" HorizontalAlignment="Left" Margin="96,280,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <Label x:Name="label_engine" Content="엔진 :" HorizontalAlignment="Left" Margin="50,303,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <ComboBox x:Name="comboBox_engine" HorizontalAlignment="Left" Margin="96,305,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
                     <ComboBoxItem Content="DirectX"/>
                     <ComboBoxItem Content="Unity"/>
@@ -107,32 +107,61 @@
                     <ComboBoxItem Content="Gamebryo"/>
                     <ComboBoxItem Content="Cocos2Dx"/>
                 </ComboBox>
-                <Label x:Name="label_resourceType" Content="리소스 타입 :" HorizontalAlignment="Left" Margin="10,309,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
-                <ComboBox x:Name="comboBox_resourceType" HorizontalAlignment="Left" Margin="96,311,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                <Label x:Name="label_resourceType" Content="리소스 타입 :" HorizontalAlignment="Left" Margin="10,354,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
+                <ComboBox x:Name="comboBox_resourceType" HorizontalAlignment="Left" Margin="96,356,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
                     <ComboBoxItem Content="기타"/>
-                    <ComboBoxItem Content="기획"/>
+                    <ComboBoxItem Content="기획서"/>
                     <ComboBoxItem Content="기획 부산물"/>
                     <ComboBoxItem Content="프로그램 소스"/>
+                    <ComboBoxItem Content="프로그램 디자인"/>
+                    <ComboBoxItem Content="원화"/>
+                    <ComboBoxItem Content="일러스트"/>
+                    <ComboBoxItem Content="포스터"/>
+                    <ComboBoxItem Content="아이콘"/>
+                    <ComboBoxItem Content="로고"/>
+                    <ComboBoxItem Content="UI"/>
+                    <ComboBoxItem Content="2D 애니메이션"/>
+                    <ComboBoxItem Content="2D 스프라이트"/>
+                    <ComboBoxItem Content="2D 이펙트"/>
+                    <ComboBoxItem Content="3D 모델"/>
+                    <ComboBoxItem Content="3D 이펙트"/>
+                    <ComboBoxItem Content="텍스쳐"/>
+                    <ComboBoxItem Content="3D 애니메이션"/>
+                    <ComboBoxItem Content="사운드 효과"/>
+                    <ComboBoxItem Content="사운드 배경음"/>
+                    <ComboBoxItem Content="사운드 음성"/>
+                    <ComboBoxItem Content="동영상"/>
                 </ComboBox>
-                <Label x:Name="label_etc" Content="기타 :" HorizontalAlignment="Left" Margin="50,340,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-                <TextBox x:Name="textBox_etc" HorizontalAlignment="Left" Margin="96,344,0,10" Width="224" TextWrapping="Wrap"/>
+                <Label x:Name="label_etc" Content="기타 :" HorizontalAlignment="Left" Margin="50,385,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <TextBox x:Name="textBox_etc" HorizontalAlignment="Left" Margin="96,385,0,10" Width="224" TextWrapping="Wrap"/>
                 <Label x:Name="label_fileName" Content="파일 이름 :" Grid.Column="1" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_fileName" Grid.Column="1" Height="23" Margin="84,46,10,0" Text="(존재하지 않음)" VerticalAlignment="Top" IsReadOnly="True" IsUndoEnabled="False"/>
+                <TextBox x:Name="textBox_fileName" Grid.Column="1" Height="23" Margin="84,46,10,0" VerticalAlignment="Top" IsReadOnly="True" IsUndoEnabled="False"/>
                 <Label x:Name="label_fileUpload" Content="업로드 :" Grid.Column="1" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_fileUpload" Grid.Column="1" Height="23" Margin="68,77,82,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <Button x:Name="button_fileBrowse" Content="찾아보기" Grid.Column="1" HorizontalAlignment="Right" Margin="0,77,10,0" VerticalAlignment="Top" Width="67" Height="23"/>
+                <TextBox x:Name="textBox_fileUpload" Grid.Column="1" Height="23" Margin="68,77,82,0" VerticalAlignment="Top"/>
+                <Button x:Name="button_fileBrowse" Content="찾아보기" Grid.Column="1" HorizontalAlignment="Right" Margin="0,77,10,0" VerticalAlignment="Top" Width="67" Height="23" Click="button_fileBrowse_Click"/>
                 <GroupBox x:Name="groupBox_thumnail" Grid.Column="1" Header="썸네일" Margin="10,105,10,10">
                     <Grid>
                         <Label x:Name="label_thumnailName" Content="이름 :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="textBox_thumnailName" Height="23" Margin="56,14,10,0" Text="(존재하지 않음)" VerticalAlignment="Top" IsReadOnly="True" IsUndoEnabled="False"/>
+                        <TextBox x:Name="textBox_thumnailName" Height="23" Margin="56,14,10,0" VerticalAlignment="Top" IsReadOnly="True" IsUndoEnabled="False"/>
                         <Label x:Name="label_thumnailUpload" Content="업로드 :" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="textBox_thumnailUpload" Height="23" Margin="68,45,82,0" VerticalAlignment="Top" IsUndoEnabled="True"/>
-                        <Button x:Name="button_fileBrowse_Copy" Content="찾아보기" HorizontalAlignment="Right" Margin="0,45,10,0" VerticalAlignment="Top" Width="67" Height="23"/>
+                        <Button x:Name="button_thumnailUpload" Content="찾아보기" HorizontalAlignment="Right" Margin="0,45,10,0" VerticalAlignment="Top" Width="67" Height="23" Click="button_thumnailUpload_Click"/>
                         <Image x:Name="image" Margin="10,73,10,10" Source="loginMenu.jpg" StretchDirection="DownOnly"/>
                     </Grid>
                 </GroupBox>
+                <Label x:Name="label_major" Content="전공 :" HorizontalAlignment="Left" Margin="50,104,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+                <ComboBox x:Name="comboBox_major" HorizontalAlignment="Left" Margin="96,106,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Height="22">
+                    <ComboBoxItem Content="기타"/>
+                    <ComboBoxItem Content="프로그래밍"/>
+                    <ComboBoxItem Content="그래픽"/>
+                    <ComboBoxItem Content="기획"/>
+                </ComboBox>
             </Grid>
         </GroupBox>
-        <Button x:Name="button_save" Content="저장" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom" Width="80" Height="40"/>
+        <Button x:Name="button_clear" Content="초기화" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="80" Height="40" Click="button_clear_Click"/>
+        <Button x:Name="button_copy" Content="복사" HorizontalAlignment="Left" Margin="95,0,0,10" VerticalAlignment="Bottom" Width="80" Height="40" Click="button_copy_Click"/>
+        <Button x:Name="button_delete" Content="삭제" HorizontalAlignment="Right" Margin="0,0,180,10" VerticalAlignment="Bottom" Width="80" Height="40" Click="button_delete_Click"/>
+        <Button x:Name="button_update" Content="수정" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Height="40" Click="button_update_Click"/>
+        <Button x:Name="button_insert" Content="추가" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Bottom" Width="80" Height="40" Click="button_insert_Click"/>
     </Grid>
 </Window>

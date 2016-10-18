@@ -52,7 +52,6 @@ namespace CK_Mckinley
             {
                 connection.Dispose();
                 connection = null;
-                System.Windows.MessageBox.Show("로그아웃 되었습니다.");
 
                 disposedValue = true;
             }
